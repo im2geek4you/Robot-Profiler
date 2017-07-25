@@ -12,6 +12,7 @@ namespace Robot_Profiler
     public partial class FormRobotProfiler : Form
     {
         public static DataTable table = null;
+        private String datafile;
 
         public FormRobotProfiler()
         {
@@ -29,11 +30,12 @@ namespace Robot_Profiler
 
             if (openFileDialogXMLFile.ShowDialog() == DialogResult.OK)
             {
+                datafile = Path.GetFileNameWithoutExtension(openFileDialogXMLFile.FileName) + ".db";
                 dataGridViewRobotKWs.DataSource = null;
                 dataGridViewRobotKWs.Rows.Clear();
                 toolStripStatusLabelMainFormStatus.Text = "Robot output file loaded: " + openFileDialogXMLFile.FileName;
 
-                using (Form loading = new LoadingXML(openFileDialogXMLFile.FileName))
+                using (Form loading = new FormLoadingXML(openFileDialogXMLFile.FileName))
                 {
                     loading.StartPosition = FormStartPosition.CenterParent;
                     loading.ShowDialog();
@@ -42,7 +44,7 @@ namespace Robot_Profiler
                 dataGridViewRobotKWs.DataSource = table;
                 dataGridViewRobotKWs.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 //launch Avg duration calculation thread
-                using (Form formCalcAvg = new FormCalcAvg(Path.GetFileNameWithoutExtension(openFileDialogXMLFile.FileName) + ".db", dataGridViewRobotKWs))
+                using (Form formCalcAvg = new FormCalcAvg(datafile, dataGridViewRobotKWs))
                 {
                     formCalcAvg.StartPosition = FormStartPosition.CenterParent;
                     formCalcAvg.ShowDialog();
@@ -65,6 +67,7 @@ namespace Robot_Profiler
 
             if (openFileDialogDBFile.ShowDialog() == DialogResult.OK)
             {
+                datafile = openFileDialogDBFile.FileName;
                 ProfileDB db = new ProfileDB(openFileDialogDBFile.FileName, false);
                 table = db.RetrieveTable("robot");
                 dataGridViewRobotKWs.DataSource = null;
@@ -98,7 +101,7 @@ namespace Robot_Profiler
                 {
                     if( line.Index !=0)
                     {
-                        if (cell.Value.ToString().ToLower().Contains(toolStripTextBoxSearch.Text)){
+                        if (cell.Value.ToString().ToLower().Contains(toolStripTextBoxSearch.Text.ToLower())){
                             found = true;
                         }
                     }
@@ -140,6 +143,49 @@ namespace Robot_Profiler
                 default:
                     break;
             }
+        }
+
+        private void toolStripTextBoxSearch_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar.Equals((char)13))
+            {
+                toolStripButtonSearch_Click(sender, e);
+            }
+        }
+
+        private void toolStripButtonGraphAll_Click(object sender, EventArgs e)
+        {
+            using (Form formGraphAll = new FormGraphAll(dataGridViewRobotKWs))
+            {
+                formGraphAll.StartPosition = FormStartPosition.CenterParent;
+                formGraphAll.ShowDialog();
+            }
+        }
+
+        private void contextMenuStripDGVMain_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (dataGridViewRobotKWs.SelectedRows.Count != 1)
+            {
+                contextMenuStripDGVMain.Items[0].Enabled = false;
+            }
+            else
+            {
+                contextMenuStripDGVMain.Items[0].Enabled = true;
+            }
+        }
+
+        private void graphPointsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach ( DataGridViewRow row in dataGridViewRobotKWs.SelectedRows)
+            {
+                using (Form formGraphKwPoints = new FormGraphKwPoints(datafile, row.Cells["Name"].Value.ToString()))
+                {
+                    formGraphKwPoints.StartPosition = FormStartPosition.CenterParent;
+                    formGraphKwPoints.ShowDialog();
+                }
+                
+            }
+            
         }
     }
 }

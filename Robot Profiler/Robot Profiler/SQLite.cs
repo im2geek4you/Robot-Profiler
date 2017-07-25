@@ -47,7 +47,7 @@ namespace Robot_Profiler
             return dt;
         }
 
-        public List<String> SelectQueryDurations(String table, String Name)
+        public List<String> SelectQueryDurations(String table, String kwName)
         {
             SQLiteDataAdapter da;
             DataTable dt = new DataTable();
@@ -57,7 +57,7 @@ namespace Robot_Profiler
                 {
                     try
                     {
-                        query.Parameters.AddWithValue("@Name", Name);
+                        query.Parameters.AddWithValue("@Name", kwName);
                         sqlite.Open();  //Initiate connection to the db
                         da = new SQLiteDataAdapter(query);
                         da.Fill(dt); //fill the datasource

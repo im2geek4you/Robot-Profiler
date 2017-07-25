@@ -28,8 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormRobotProfiler));
             this.dataGridViewRobotKWs = new System.Windows.Forms.DataGridView();
+            this.contextMenuStripDGVMain = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.graphPointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialogXMLFile = new System.Windows.Forms.OpenFileDialog();
             this.menuStripMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,14 +43,17 @@
             this.statusStripMainForm = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelMainFormStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.openFileDialogDBFile = new System.Windows.Forms.OpenFileDialog();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripMainForm = new System.Windows.Forms.ToolStrip();
             this.toolStripTextBoxSearch = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonClearSearch = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonGraphAll = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRobotKWs)).BeginInit();
+            this.contextMenuStripDGVMain.SuspendLayout();
             this.menuStripMain.SuspendLayout();
             this.statusStripMainForm.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
+            this.toolStripMainForm.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridViewRobotKWs
@@ -59,6 +65,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewRobotKWs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewRobotKWs.ContextMenuStrip = this.contextMenuStripDGVMain;
             this.dataGridViewRobotKWs.Location = new System.Drawing.Point(12, 52);
             this.dataGridViewRobotKWs.Name = "dataGridViewRobotKWs";
             this.dataGridViewRobotKWs.RowHeadersVisible = false;
@@ -66,6 +73,21 @@
             this.dataGridViewRobotKWs.Size = new System.Drawing.Size(1000, 352);
             this.dataGridViewRobotKWs.TabIndex = 2;
             this.dataGridViewRobotKWs.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridViewRobotKWs_CellFormatting);
+            // 
+            // contextMenuStripDGVMain
+            // 
+            this.contextMenuStripDGVMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.graphPointsToolStripMenuItem});
+            this.contextMenuStripDGVMain.Name = "contextMenuStripDGVMain";
+            this.contextMenuStripDGVMain.Size = new System.Drawing.Size(158, 48);
+            this.contextMenuStripDGVMain.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripDGVMain_Opening);
+            // 
+            // graphPointsToolStripMenuItem
+            // 
+            this.graphPointsToolStripMenuItem.Name = "graphPointsToolStripMenuItem";
+            this.graphPointsToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.graphPointsToolStripMenuItem.Text = "Graph all points";
+            this.graphPointsToolStripMenuItem.Click += new System.EventHandler(this.graphPointsToolStripMenuItem_Click);
             // 
             // openFileDialogXMLFile
             // 
@@ -139,22 +161,25 @@
             // 
             this.openFileDialogDBFile.FileName = "openFileDialog1";
             // 
-            // toolStrip1
+            // toolStripMainForm
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMainForm.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripTextBoxSearch,
             this.toolStripButtonSearch,
-            this.toolStripButtonClearSearch});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1025, 25);
-            this.toolStrip1.TabIndex = 5;
-            this.toolStrip1.Text = "toolStrip1";
+            this.toolStripButtonClearSearch,
+            this.toolStripSeparator1,
+            this.toolStripButtonGraphAll});
+            this.toolStripMainForm.Location = new System.Drawing.Point(0, 24);
+            this.toolStripMainForm.Name = "toolStripMainForm";
+            this.toolStripMainForm.Size = new System.Drawing.Size(1025, 25);
+            this.toolStripMainForm.TabIndex = 5;
+            this.toolStripMainForm.Text = "toolStrip1";
             // 
             // toolStripTextBoxSearch
             // 
             this.toolStripTextBoxSearch.Name = "toolStripTextBoxSearch";
             this.toolStripTextBoxSearch.Size = new System.Drawing.Size(200, 25);
+            this.toolStripTextBoxSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.toolStripTextBoxSearch_KeyPress);
             // 
             // toolStripButtonSearch
             // 
@@ -176,25 +201,42 @@
             this.toolStripButtonClearSearch.Text = "Clear Search";
             this.toolStripButtonClearSearch.Click += new System.EventHandler(this.toolStripButtonClearSearch_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButtonGraphAll
+            // 
+            this.toolStripButtonGraphAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonGraphAll.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonGraphAll.Image")));
+            this.toolStripButtonGraphAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonGraphAll.Name = "toolStripButtonGraphAll";
+            this.toolStripButtonGraphAll.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonGraphAll.Text = "Graph all";
+            this.toolStripButtonGraphAll.Click += new System.EventHandler(this.toolStripButtonGraphAll_Click);
+            // 
             // FormRobotProfiler
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1025, 429);
-            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.toolStripMainForm);
             this.Controls.Add(this.statusStripMainForm);
             this.Controls.Add(this.dataGridViewRobotKWs);
             this.Controls.Add(this.menuStripMain);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStripMain;
             this.Name = "FormRobotProfiler";
             this.Text = "Robot Profiler";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRobotKWs)).EndInit();
+            this.contextMenuStripDGVMain.ResumeLayout(false);
             this.menuStripMain.ResumeLayout(false);
             this.menuStripMain.PerformLayout();
             this.statusStripMainForm.ResumeLayout(false);
             this.statusStripMainForm.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.toolStripMainForm.ResumeLayout(false);
+            this.toolStripMainForm.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -212,10 +254,14 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelMainFormStatus;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialogDBFile;
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStrip toolStripMainForm;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBoxSearch;
         private System.Windows.Forms.ToolStripButton toolStripButtonSearch;
         private System.Windows.Forms.ToolStripButton toolStripButtonClearSearch;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton toolStripButtonGraphAll;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripDGVMain;
+        private System.Windows.Forms.ToolStripMenuItem graphPointsToolStripMenuItem;
     }
 }
 

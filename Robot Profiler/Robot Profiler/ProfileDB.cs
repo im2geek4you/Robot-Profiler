@@ -45,9 +45,9 @@ namespace Robot_Profiler
             return conn.SelectQuery("SELECT Type, Name, count(Name) FROM robot GROUP BY Name;");
         }
 
-        public List<TimeSpan> RetrieveDuration(String table, String Name)
+        public List<TimeSpan> RetrieveDuration(String table, String kwName)
         {
-            List<String> durations = conn.SelectQueryDurations(table, Name);
+            List<String> durations = conn.SelectQueryDurations(table, kwName);
             List<TimeSpan> durationsTimeSpan = new List<TimeSpan>();
             foreach (String duration in durations)
             {
