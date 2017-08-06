@@ -39,6 +39,13 @@ is very usefull since it shows how some Keywords can start taking longer over th
 
 Robot Profiles is under development... if you find errors or would like to see some feature, please let me know. 
 
+## Usage
+
+Use File->Open Robot Output XML from menu and select the xml file from the Robot execution. The file will be analysed and a file with the extension .db and same name 
+as the xml will be created to store information processed. You can later open this .db file instead of waiting for the xml to be processed again.
+After this the data will be shown in a table containing all Keywords, Tests and Suited found, their count and average duration. You can sort, search and plot all executions of a selected 
+Keyword (if it has more than one execution).
+
 ## Download
 In case you don't want to compile your own version of Robot Profiler you can download the compiled version below.
 
