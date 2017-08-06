@@ -14,6 +14,7 @@ namespace Robot_Profiler
     public partial class FormCalcAvg : Form
     {
         private String Filename;
+        DataTable stats;
 
         public FormCalcAvg()
         {
@@ -29,20 +30,23 @@ namespace Robot_Profiler
         private void backgroundWorkerCalcAverageDuration_DoWork(object sender, DoWorkEventArgs e)
         {
             DataGridView dataGridViewRobotKWs = (DataGridView)e.Argument;
-            foreach (DataGridViewRow row in dataGridViewRobotKWs.Rows)
+            ProfileDB db = new ProfileDB(Filename, false);
+            db.CreateTableRobotStats();
+            stats = db.RetrieveTableDistinctKWs();
+            stats.Columns.Add("Avg. Duration");
+            foreach (DataRow row in stats.Rows)
             {                 
                 List<TimeSpan> durations = null;
-                ProfileDB db = new ProfileDB(Filename, false);
                 //get all durations for each Name(kw, test or suite)
-                durations = db.RetrieveDuration("robot", row.Cells["Name"].Value.ToString());
+                durations = db.RetrieveDuration(row["Name"].ToString());
                 //calculate average duration and set column Avg. Duration with that value
                 double doubleAverageTicks = durations.Average(timeSpan => timeSpan.Ticks);
                 long longAverageTicks = Convert.ToInt64(doubleAverageTicks);
 
-                row.Cells["Avg. Duration"].Value = new TimeSpan(longAverageTicks);
-                if (row.Index % 10 == 0)
+                row["Avg. Duration"] = new TimeSpan(longAverageTicks);
+                if (stats.Rows.IndexOf(row) % 10 == 0)
                 {
-                    backgroundWorkerCalcAverageDuration.ReportProgress((int)((float)row.Index / (float)dataGridViewRobotKWs.Rows.Count * 100));
+                    backgroundWorkerCalcAverageDuration.ReportProgress((int)((float)stats.Rows.IndexOf(row) / (float)stats.Rows.Count * 100));
                 }
             }
         }
@@ -56,6 +60,10 @@ namespace Robot_Profiler
 
         private void backgroundWorkerCalcAverageDuration_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            //save data
+            ProfileDB db = new ProfileDB(Filename, false);
+            db.SaveStats(stats);
+            FormRobotProfiler.table = db.RetrieveTableStats();
             progressBarCalcAvgDuration.Value = progressBarCalcAvgDuration.Maximum;
             labelCalcAvgStatus.Text = "Avg. Duration calculation complete.";
             pictureBoxCalcAvgDuration.Image = null;

@@ -32,7 +32,7 @@ namespace Robot_Profiler
         {
             List<TimeSpan> Durations; 
             ProfileDB db = new ProfileDB(DataFile, false);
-            Durations = db.RetrieveDuration("robot", KwName);
+            Durations = db.RetrieveDuration(KwName);
 
             chartGraphKwPoints.Series.Clear();
 

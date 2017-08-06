@@ -35,20 +35,21 @@ namespace Robot_Profiler
                 dataGridViewRobotKWs.Rows.Clear();
                 toolStripStatusLabelMainFormStatus.Text = "Robot output file loaded: " + openFileDialogXMLFile.FileName;
 
+                //launch XML processing thread
                 using (Form loading = new FormLoadingXML(openFileDialogXMLFile.FileName))
                 {
                     loading.StartPosition = FormStartPosition.CenterParent;
                     loading.ShowDialog();
                 }
-                table.Columns.Add("Avg. Duration");
-                dataGridViewRobotKWs.DataSource = table;
-                dataGridViewRobotKWs.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
                 //launch Avg duration calculation thread
                 using (Form formCalcAvg = new FormCalcAvg(datafile, dataGridViewRobotKWs))
                 {
                     formCalcAvg.StartPosition = FormStartPosition.CenterParent;
                     formCalcAvg.ShowDialog();
                 }
+                dataGridViewRobotKWs.DataSource = table;
+                dataGridViewRobotKWs.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
         }
 
@@ -69,26 +70,17 @@ namespace Robot_Profiler
             {
                 datafile = openFileDialogDBFile.FileName;
                 ProfileDB db = new ProfileDB(openFileDialogDBFile.FileName, false);
-                table = db.RetrieveTable("robot");
                 dataGridViewRobotKWs.DataSource = null;
                 dataGridViewRobotKWs.Rows.Clear();
                 toolStripStatusLabelMainFormStatus.Text = "Database file loaded: " + openFileDialogDBFile.FileName;
-                table.Columns.Add("Avg. Duration");
-                dataGridViewRobotKWs.DataSource = table;
+                dataGridViewRobotKWs.DataSource = db.RetrieveTableStats();
                 dataGridViewRobotKWs.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                //launch Avg duration calculation thread
-                using (Form formCalcAvg = new FormCalcAvg(openFileDialogDBFile.FileName, dataGridViewRobotKWs))
-                {
-                    formCalcAvg.StartPosition = FormStartPosition.CenterParent;
-                    formCalcAvg.ShowDialog();
-                }
-
             }
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Robot Profiler v0.0.0.1\nCarlos Santos");
+            MessageBox.Show("Robot Profiler v0.0.0.2\nCarlos Santos");
         }
 
         private void toolStripButtonSearch_Click(object sender, EventArgs e)

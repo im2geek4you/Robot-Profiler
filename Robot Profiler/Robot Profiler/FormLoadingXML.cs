@@ -42,7 +42,7 @@ namespace Robot_Profiler
             List<RobotElement> robotList = new List<RobotElement>();
             int lineCount = File.ReadLines(FileName).Count();
             ProfileDB db = new ProfileDB(Path.GetFileNameWithoutExtension(FileName)+".db", true);
-            db.CreateTable("robot");
+            db.CreateTableRobotKWs();
             using (XmlReader reader = XmlReader.Create(FileName))
             {
                 long count = 0;
@@ -128,7 +128,6 @@ namespace Robot_Profiler
             }
             backgroundWorkerXML2DB.ReportProgress(100, "Storing data on Database... Please wait!");
             db.StoreRobotElemBulk(robotList);
-            FormRobotProfiler.table = db.RetrieveTable("robot");
         }
 
         private void backgroundWorkerXML2DB_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

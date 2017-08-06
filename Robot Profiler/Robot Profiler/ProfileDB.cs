@@ -25,11 +25,17 @@ namespace Robot_Profiler
             set { dbfilename = value; }
         }
 
-        public void CreateTable(String tablename)
+        public void CreateTableRobotKWs()
         {
-            conn.CreateTable(tablename);
+            conn.CreateTableKWs();
         }
-        
+
+        public void CreateTableRobotStats()
+        {
+            conn.CreateTableStats();
+        }
+
+
         public void StoreRobotElem(RobotElement elem)
         {
             conn.InsertElement(elem);
@@ -40,14 +46,19 @@ namespace Robot_Profiler
             conn.InsertElementBulk(elemList);
         }
 
-        public DataTable RetrieveTable(String tablename)
+        public DataTable RetrieveTableStats()
         {
-            return conn.SelectQuery("SELECT Type, Name, count(Name) FROM robot GROUP BY Name;");
+            return conn.SelectQuery("SELECT * FROM robotStats;");
         }
 
-        public List<TimeSpan> RetrieveDuration(String table, String kwName)
+        public DataTable RetrieveTableDistinctKWs()
         {
-            List<String> durations = conn.SelectQueryDurations(table, kwName);
+            return conn.SelectQuery("SELECT Type, Name, count(Name) FROM robotKWs GROUP BY Name;");
+        }
+
+        public List<TimeSpan> RetrieveDuration(String kwName)
+        {
+            List<String> durations = conn.SelectQueryDurations(kwName);
             List<TimeSpan> durationsTimeSpan = new List<TimeSpan>();
             foreach (String duration in durations)
             {
@@ -55,6 +66,12 @@ namespace Robot_Profiler
             }
             return durationsTimeSpan;
         }
+
+        public void SaveStats(DataTable stats)
+        {
+            conn.SaveTableStats(stats);
+        }
+
 
     }
 }
