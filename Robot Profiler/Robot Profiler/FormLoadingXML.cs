@@ -37,7 +37,7 @@ namespace Robot_Profiler
         {
             List<RobotElement> robotList = new List<RobotElement>();
             int lineCount = File.ReadLines(FileName).Count();
-            ProfileDB db = new ProfileDB(Path.GetFileNameWithoutExtension(FileName)+".db", true);
+            ProfileDB db = new ProfileDB(Path.GetDirectoryName(FileName) + "\\" + Path.GetFileNameWithoutExtension(FileName) + ".db", true);
             db.CreateTableRobotKWs();
             using (XmlReader reader = XmlReader.Create(FileName))
             {

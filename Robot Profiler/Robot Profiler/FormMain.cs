@@ -28,7 +28,7 @@ namespace Robot_Profiler
 
             if (openFileDialogXMLFile.ShowDialog() == DialogResult.OK)
             {
-                datafile = Path.GetFileNameWithoutExtension(openFileDialogXMLFile.FileName) + ".db";
+                datafile = Path.GetDirectoryName(openFileDialogXMLFile.FileName) + "\\" + Path.GetFileNameWithoutExtension(openFileDialogXMLFile.FileName) + ".db";
                 dataGridViewRobotKWs.DataSource = null;
                 dataGridViewRobotKWs.Rows.Clear();
                 toolStripStatusLabelMainFormStatus.Text = "Robot output file loaded: " + openFileDialogXMLFile.FileName;

@@ -4,6 +4,11 @@ Robot Framework execution profiler
 This tool can process a output xml file from Robot (or Rebot) execution and show various metrics regarding the execution time spent on each keyword. It will allow
 to determine which keywords need to be optimized based on which ones are taking longer or run more often.
 
+https://user-images.githubusercontent.com/13609585/29005913-c95aff5e-7add-11e7-91f2-8bc9643bcacb.png
+
+https://user-images.githubusercontent.com/13609585/29005915-c95bec2a-7add-11e7-931f-1ccfa0c977d5.png
+
+https://user-images.githubusercontent.com/13609585/29005914-c95bb2fa-7add-11e7-9087-231bb2519be8.png
 
 ## What is the xml format expected from Robot or Rebot?
 
@@ -36,3 +41,5 @@ Robot Profiles is under development... if you find errors or would like to see s
 
 ## Download
 In case you don't want to compile your own version of Robot Profiler you can download the compiled version below.
+
+(https://github.com/im2geek4you/Robot-Profiler/files/1203319/Robot.Profiler.v0.0.0.2.zip)
