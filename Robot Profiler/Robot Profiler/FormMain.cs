@@ -173,7 +173,7 @@ namespace Robot_Profiler
                 using (Form formGraphKwPoints = new FormGraphKwPoints(datafile, row.Cells["Name"].Value.ToString()))
                 {
                     formGraphKwPoints.StartPosition = FormStartPosition.CenterParent;
-                    formGraphKwPoints.ShowDialog();
+                    formGraphKwPoints.ShowDialog(); 
                 }
                 
             }
