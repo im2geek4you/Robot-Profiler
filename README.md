@@ -26,10 +26,13 @@ In some cases starttime and/or endtime are not available, but elapsedtime is pre
 Robot Profiler has been tested with xml files over 2GB without issues (this is because the xml file is read line by line instead of loading it to memory).
 
 ## What information does Robot Profiler provide to you?
-Robot profiler shows a list of all distinct keywords, tests and suites exected in a xml file. Per each Kw, test or suite it shows how many executions occured and it's average duration.
-The different Keywords ,tests and suites are colored differently so they are easy to see. 
-By selecting and right-clicking a keyword on the main table with more than one run it is possible to generate a graphic with all executions VS it's duration. This
-is very usefull since it shows how some keywords can start taking longer over the course of the execution of long runs.
+Robot profiler shows a list of all distinct Keywords, Tests and Suites exected in a xml file. Per each Keyword, Test or Suite it shows how many executions occured and it's average duration.
+The different Keywords, Tests and Suites are colored differently so they are easy to see. You can also search and sort them. 
+By selecting and right-clicking a Keyword on the main table with more than one run it is possible to generate a graphic with all executions versus it's duration. This
+is very usefull since it shows how some Keywords can start taking longer over the course of the execution of long runs.
 
 
 Robot Profiles is under development... if you find errors or would like to see some feature, please let me know. 
+
+## Download
+In case you don't want to compile your own version of Robot Profiler you can download the compiled version below.
