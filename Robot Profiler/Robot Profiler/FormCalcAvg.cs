@@ -60,12 +60,12 @@ namespace Robot_Profiler
 
         private void backgroundWorkerCalcAverageDuration_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            labelCalcAvgStatus.Text = "Avg. Duration calculation complete.";
             //save data
             ProfileDB db = new ProfileDB(Filename, false);
             db.SaveStats(stats);
             FormRobotProfiler.table = db.RetrieveTableStats();
             progressBarCalcAvgDuration.Value = progressBarCalcAvgDuration.Maximum;
-            labelCalcAvgStatus.Text = "Avg. Duration calculation complete.";
             pictureBoxCalcAvgDuration.Image = null;
             Thread.Sleep(1000);
             this.Close();
