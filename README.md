@@ -42,4 +42,4 @@ Robot Profiles is under development... if you find errors or would like to see s
 ## Download
 In case you don't want to compile your own version of Robot Profiler you can download the compiled version below.
 
-(https://github.com/im2geek4you/Robot-Profiler/files/1203319/Robot.Profiler.v0.0.0.2.zip)
+![Robot.Profiler.v0.0.0.2.zip](https://github.com/im2geek4you/Robot-Profiler/files/1203319/Robot.Profiler.v0.0.0.2.zip)
