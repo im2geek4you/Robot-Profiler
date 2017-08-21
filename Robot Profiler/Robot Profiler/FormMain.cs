@@ -78,7 +78,7 @@ namespace Robot_Profiler
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Robot Profiler v0.0.0.2\nCarlos Santos");
+            MessageBox.Show("Robot Profiler v0.0.0.3\nCarlos Santos");
         }
 
         private void toolStripButtonSearch_Click(object sender, EventArgs e)
@@ -145,11 +145,9 @@ namespace Robot_Profiler
 
         private void toolStripButtonGraphAll_Click(object sender, EventArgs e)
         {
-            using (Form formGraphAll = new FormGraphAll(dataGridViewRobotKWs))
-            {
-                formGraphAll.StartPosition = FormStartPosition.CenterParent;
-                formGraphAll.ShowDialog();
-            }
+            Form formGraphAll = new FormGraphAll(dataGridViewRobotKWs);
+            formGraphAll.StartPosition = FormStartPosition.CenterParent;
+            formGraphAll.Show();
         }
 
         private void contextMenuStripDGVMain_Opening(object sender, System.ComponentModel.CancelEventArgs e)
@@ -168,12 +166,9 @@ namespace Robot_Profiler
         {
             foreach ( DataGridViewRow row in dataGridViewRobotKWs.SelectedRows)
             {
-                using (Form formGraphKwPoints = new FormGraphKwPoints(datafile, row.Cells["Name"].Value.ToString()))
-                {
-                    formGraphKwPoints.StartPosition = FormStartPosition.CenterParent;
-                    formGraphKwPoints.ShowDialog(); 
-                }
-                
+                Form formGraphKwPoints = new FormGraphKwPoints(datafile, row.Cells["Name"].Value.ToString());
+                formGraphKwPoints.StartPosition = FormStartPosition.CenterParent;
+                formGraphKwPoints.Show();               
             }
             
         }
