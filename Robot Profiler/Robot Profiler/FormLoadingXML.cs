@@ -33,7 +33,7 @@ namespace Robot_Profiler
         }
 
 
-        private void backgroundWorkerXML2DB_DoWork(object sender, DoWorkEventArgs e)
+        private void BackgroundWorkerXML2DB_DoWork(object sender, DoWorkEventArgs e)
         {
             List<RobotElement> robotList = new List<RobotElement>();
             int lineCount = File.ReadLines(FileName).Count();
@@ -126,20 +126,20 @@ namespace Robot_Profiler
             db.StoreRobotElemBulk(robotList);
         }
 
-        private void backgroundWorkerXML2DB_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void BackgroundWorkerXML2DB_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             pictureBoxXMLWorker.Image = null;
             Thread.Sleep(1000);
             this.Close();
         }
 
-        private void backgroundWorkerXML2DB_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void BackgroundWorkerXML2DB_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBarXMLWorker.Value = e.ProgressPercentage;
             labelWorkDescription.Text = e.UserState.ToString();
         }
 
-        private void buttonXMLWorkerCancel_Click(object sender, EventArgs e)
+        private void ButtonXMLWorkerCancel_Click(object sender, EventArgs e)
         {
             backgroundWorkerXML2DB.CancelAsync();
             this.Close();

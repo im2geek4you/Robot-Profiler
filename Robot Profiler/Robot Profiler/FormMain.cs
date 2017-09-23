@@ -15,10 +15,13 @@ namespace Robot_Profiler
         public FormRobotProfiler()
         {
             InitializeComponent();
+            this.AllowDrop = true;
+            this.DragEnter += new DragEventHandler(FormRobotProfiler_DragEnter);
+            this.DragDrop += new DragEventHandler(FormRobotProfiler_DragDrop);
         }
 
 
-        private void openRobotXMLFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenRobotXMLFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialogXMLFile.InitialDirectory = ".";
             openFileDialogXMLFile.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
@@ -28,35 +31,40 @@ namespace Robot_Profiler
 
             if (openFileDialogXMLFile.ShowDialog() == DialogResult.OK)
             {
-                datafile = Path.GetDirectoryName(openFileDialogXMLFile.FileName) + "\\" + Path.GetFileNameWithoutExtension(openFileDialogXMLFile.FileName) + ".db";
-                dataGridViewRobotKWs.DataSource = null;
-                dataGridViewRobotKWs.Rows.Clear();
-                toolStripStatusLabelMainFormStatus.Text = "Robot output file loaded: " + openFileDialogXMLFile.FileName;
-
-                //launch XML processing thread
-                using (Form loading = new FormLoadingXML(openFileDialogXMLFile.FileName))
-                {
-                    loading.StartPosition = FormStartPosition.CenterParent;
-                    loading.ShowDialog();
-                }
-
-                //launch Avg duration calculation thread
-                using (Form formCalcAvg = new FormCalcAvg(datafile, dataGridViewRobotKWs))
-                {
-                    formCalcAvg.StartPosition = FormStartPosition.CenterParent;
-                    formCalcAvg.ShowDialog();
-                }
-                dataGridViewRobotKWs.DataSource = table;
-                dataGridViewRobotKWs.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                OpenRobotXMLFile(openFileDialogXMLFile.FileName);
             }
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenRobotXMLFile(string filename)
+        {
+            datafile = Path.GetDirectoryName(filename) + "\\" + Path.GetFileNameWithoutExtension(filename) + ".db";
+            dataGridViewRobotKWs.DataSource = null;
+            dataGridViewRobotKWs.Rows.Clear();
+            toolStripStatusLabelMainFormStatus.Text = "Robot output file loaded: " + filename;
+
+            //launch XML processing thread
+            using (Form loading = new FormLoadingXML(filename))
+            {
+                loading.StartPosition = FormStartPosition.CenterParent;
+                loading.ShowDialog();
+            }
+
+            //launch Avg duration calculation thread
+            using (Form formCalcAvg = new FormCalcAvg(datafile, dataGridViewRobotKWs))
+            {
+                formCalcAvg.StartPosition = FormStartPosition.CenterParent;
+                formCalcAvg.ShowDialog();
+            }
+            dataGridViewRobotKWs.DataSource = table;
+            dataGridViewRobotKWs.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        }
+
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void openProfilerDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenProfilerDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialogDBFile.InitialDirectory = ".";
             openFileDialogDBFile.Filter = "db files (*.db)|*.db|All files (*.*)|*.*";
@@ -66,22 +74,27 @@ namespace Robot_Profiler
 
             if (openFileDialogDBFile.ShowDialog() == DialogResult.OK)
             {
-                datafile = openFileDialogDBFile.FileName;
-                ProfileDB db = new ProfileDB(openFileDialogDBFile.FileName, false);
-                dataGridViewRobotKWs.DataSource = null;
-                dataGridViewRobotKWs.Rows.Clear();
-                toolStripStatusLabelMainFormStatus.Text = "Database file loaded: " + openFileDialogDBFile.FileName;
-                dataGridViewRobotKWs.DataSource = db.RetrieveTableStats();
-                dataGridViewRobotKWs.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                OpenRobotDBFile(openFileDialogDBFile.FileName);
             }
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenRobotDBFile(string filename)
+        {
+            datafile = filename;
+            ProfileDB db = new ProfileDB(filename, false);
+            dataGridViewRobotKWs.DataSource = null;
+            dataGridViewRobotKWs.Rows.Clear();
+            toolStripStatusLabelMainFormStatus.Text = "Database file loaded: " + filename;
+            dataGridViewRobotKWs.DataSource = db.RetrieveTableStats();
+            dataGridViewRobotKWs.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        }
+
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Robot Profiler v0.0.0.3\nCarlos Santos");
         }
 
-        private void toolStripButtonSearch_Click(object sender, EventArgs e)
+        private void ToolStripButtonSearch_Click(object sender, EventArgs e)
         {
             Boolean found = false;
             dataGridViewRobotKWs.CurrentCell = null;
@@ -108,7 +121,7 @@ namespace Robot_Profiler
             }
         }
 
-        private void toolStripButtonClearSearch_Click(object sender, EventArgs e)
+        private void ToolStripButtonClearSearch_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewRow line in dataGridViewRobotKWs.Rows)
             {
@@ -116,7 +129,7 @@ namespace Robot_Profiler
             }
         }
 
-        private void dataGridViewRobotKWs_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        private void DataGridViewRobotKWs_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             
             switch (dataGridViewRobotKWs.Rows[e.RowIndex].Cells["Type"].Value.ToString())
@@ -135,22 +148,24 @@ namespace Robot_Profiler
             }
         }
 
-        private void toolStripTextBoxSearch_KeyPress(object sender, KeyPressEventArgs e)
+        private void ToolStripTextBoxSearch_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar.Equals((char)13))
             {
-                toolStripButtonSearch_Click(sender, e);
+                ToolStripButtonSearch_Click(sender, e);
             }
         }
 
-        private void toolStripButtonGraphAll_Click(object sender, EventArgs e)
+        private void ToolStripButtonGraphAll_Click(object sender, EventArgs e)
         {
-            Form formGraphAll = new FormGraphAll(dataGridViewRobotKWs);
-            formGraphAll.StartPosition = FormStartPosition.CenterParent;
+            Form formGraphAll = new FormGraphAll(dataGridViewRobotKWs)
+            {
+                StartPosition = FormStartPosition.CenterParent
+            };
             formGraphAll.Show();
         }
 
-        private void contextMenuStripDGVMain_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        private void ContextMenuStripDGVMain_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (dataGridViewRobotKWs.SelectedRows.Count != 1)
             {
@@ -162,15 +177,46 @@ namespace Robot_Profiler
             }
         }
 
-        private void graphPointsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void GraphPointsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             foreach ( DataGridViewRow row in dataGridViewRobotKWs.SelectedRows)
             {
-                Form formGraphKwPoints = new FormGraphKwPoints(datafile, row.Cells["Name"].Value.ToString());
-                formGraphKwPoints.StartPosition = FormStartPosition.CenterParent;
+                Form formGraphKwPoints = new FormGraphKwPoints(datafile, row.Cells["Name"].Value.ToString())
+                {
+                    StartPosition = FormStartPosition.CenterParent
+                };
                 formGraphKwPoints.Show();               
             }
             
+        }
+
+        void FormRobotProfiler_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
+
+        void FormRobotProfiler_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if (files.Length == 1)
+            {
+                foreach (string file in files)
+                {
+                    if (file.ToLower().EndsWith(".xml"))
+                    {
+                        OpenRobotXMLFile(file);
+                    }
+                    if (file.ToLower().EndsWith(".db"))
+                    {
+                        OpenRobotDBFile(file);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Can only load one file at a time!");
+            }
+
         }
     }
 }

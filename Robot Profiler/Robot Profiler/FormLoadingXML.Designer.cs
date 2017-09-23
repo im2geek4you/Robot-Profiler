@@ -50,9 +50,9 @@
             // 
             this.backgroundWorkerXML2DB.WorkerReportsProgress = true;
             this.backgroundWorkerXML2DB.WorkerSupportsCancellation = true;
-            this.backgroundWorkerXML2DB.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerXML2DB_DoWork);
-            this.backgroundWorkerXML2DB.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerXML2DB_ProgressChanged);
-            this.backgroundWorkerXML2DB.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerXML2DB_RunWorkerCompleted);
+            this.backgroundWorkerXML2DB.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorkerXML2DB_DoWork);
+            this.backgroundWorkerXML2DB.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.BackgroundWorkerXML2DB_ProgressChanged);
+            this.backgroundWorkerXML2DB.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorkerXML2DB_RunWorkerCompleted);
             // 
             // pictureBoxXMLWorker
             // 
@@ -71,7 +71,7 @@
             this.buttonXMLWorkerCancel.TabIndex = 3;
             this.buttonXMLWorkerCancel.Text = "Cancel";
             this.buttonXMLWorkerCancel.UseVisualStyleBackColor = true;
-            this.buttonXMLWorkerCancel.Click += new System.EventHandler(this.buttonXMLWorkerCancel_Click);
+            this.buttonXMLWorkerCancel.Click += new System.EventHandler(this.ButtonXMLWorkerCancel_Click);
             // 
             // progressBarXMLWorker
             // 

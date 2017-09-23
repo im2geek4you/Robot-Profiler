@@ -72,7 +72,7 @@
             this.dataGridViewRobotKWs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewRobotKWs.Size = new System.Drawing.Size(1000, 352);
             this.dataGridViewRobotKWs.TabIndex = 2;
-            this.dataGridViewRobotKWs.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridViewRobotKWs_CellFormatting);
+            this.dataGridViewRobotKWs.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DataGridViewRobotKWs_CellFormatting);
             // 
             // contextMenuStripDGVMain
             // 
@@ -80,14 +80,14 @@
             this.graphPointsToolStripMenuItem});
             this.contextMenuStripDGVMain.Name = "contextMenuStripDGVMain";
             this.contextMenuStripDGVMain.Size = new System.Drawing.Size(158, 48);
-            this.contextMenuStripDGVMain.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripDGVMain_Opening);
+            this.contextMenuStripDGVMain.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripDGVMain_Opening);
             // 
             // graphPointsToolStripMenuItem
             // 
             this.graphPointsToolStripMenuItem.Name = "graphPointsToolStripMenuItem";
             this.graphPointsToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.graphPointsToolStripMenuItem.Text = "Graph all points";
-            this.graphPointsToolStripMenuItem.Click += new System.EventHandler(this.graphPointsToolStripMenuItem_Click);
+            this.graphPointsToolStripMenuItem.Click += new System.EventHandler(this.GraphPointsToolStripMenuItem_Click);
             // 
             // openFileDialogXMLFile
             // 
@@ -119,28 +119,28 @@
             this.openRobotXMLFileToolStripMenuItem.Name = "openRobotXMLFileToolStripMenuItem";
             this.openRobotXMLFileToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
             this.openRobotXMLFileToolStripMenuItem.Text = "Open Robot Output XML";
-            this.openRobotXMLFileToolStripMenuItem.Click += new System.EventHandler(this.openRobotXMLFileToolStripMenuItem_Click);
+            this.openRobotXMLFileToolStripMenuItem.Click += new System.EventHandler(this.OpenRobotXMLFileToolStripMenuItem_Click);
             // 
             // openProfilerDatabaseToolStripMenuItem
             // 
             this.openProfilerDatabaseToolStripMenuItem.Name = "openProfilerDatabaseToolStripMenuItem";
             this.openProfilerDatabaseToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
             this.openProfilerDatabaseToolStripMenuItem.Text = "Open Profiler Database";
-            this.openProfilerDatabaseToolStripMenuItem.Click += new System.EventHandler(this.openProfilerDatabaseToolStripMenuItem_Click);
+            this.openProfilerDatabaseToolStripMenuItem.Click += new System.EventHandler(this.OpenProfilerDatabaseToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
             this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
             // statusStripMainForm
             // 
@@ -179,7 +179,7 @@
             // 
             this.toolStripTextBoxSearch.Name = "toolStripTextBoxSearch";
             this.toolStripTextBoxSearch.Size = new System.Drawing.Size(200, 25);
-            this.toolStripTextBoxSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.toolStripTextBoxSearch_KeyPress);
+            this.toolStripTextBoxSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ToolStripTextBoxSearch_KeyPress);
             // 
             // toolStripButtonSearch
             // 
@@ -189,7 +189,7 @@
             this.toolStripButtonSearch.Name = "toolStripButtonSearch";
             this.toolStripButtonSearch.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonSearch.Text = "Search Table";
-            this.toolStripButtonSearch.Click += new System.EventHandler(this.toolStripButtonSearch_Click);
+            this.toolStripButtonSearch.Click += new System.EventHandler(this.ToolStripButtonSearch_Click);
             // 
             // toolStripButtonClearSearch
             // 
@@ -199,7 +199,7 @@
             this.toolStripButtonClearSearch.Name = "toolStripButtonClearSearch";
             this.toolStripButtonClearSearch.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonClearSearch.Text = "Clear Search";
-            this.toolStripButtonClearSearch.Click += new System.EventHandler(this.toolStripButtonClearSearch_Click);
+            this.toolStripButtonClearSearch.Click += new System.EventHandler(this.ToolStripButtonClearSearch_Click);
             // 
             // toolStripSeparator1
             // 
@@ -214,7 +214,7 @@
             this.toolStripButtonGraphAll.Name = "toolStripButtonGraphAll";
             this.toolStripButtonGraphAll.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonGraphAll.Text = "Graph all";
-            this.toolStripButtonGraphAll.Click += new System.EventHandler(this.toolStripButtonGraphAll_Click);
+            this.toolStripButtonGraphAll.Click += new System.EventHandler(this.ToolStripButtonGraphAll_Click);
             // 
             // FormRobotProfiler
             // 
