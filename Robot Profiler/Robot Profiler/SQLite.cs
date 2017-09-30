@@ -12,8 +12,16 @@ namespace Robot_Profiler
 
         public SQLite(String FileName, Boolean createDB)
         {
-            if (createDB) { SQLiteConnection.CreateFile(FileName); };
-            sqlfilename = FileName;
+            try
+            {
+                if (createDB) { SQLiteConnection.CreateFile(FileName); };
+                sqlfilename = FileName;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+
         }
 
         public DataTable SelectQuery(string query)
@@ -98,7 +106,7 @@ namespace Robot_Profiler
         {
             using (SQLiteConnection sqlite = new SQLiteConnection("Data Source=" + sqlfilename + ";Version=3;Pooling=True;Max Pool Size=10;Synchronous=off;FailIfMissing=True;Journal Mode=Off;"))
             {
-                using (SQLiteCommand createTable = new SQLiteCommand("CREATE TABLE robotStats ( `Type` TEXT NOT NULL, `Name` TEXT NOT NULL, `count(Name)` INTEGER NOT NULL, `Avg. Duration` TEXT NOT NULL, PRIMARY KEY(Name))", sqlite))
+                using (SQLiteCommand createTable = new SQLiteCommand("CREATE TABLE robotStats ( `Type` TEXT NOT NULL, `Name` TEXT NOT NULL, `count(Name)` INTEGER NOT NULL, `Avg. Duration` TEXT NOT NULL, `Total Duration` TEXT NOT NULL, PRIMARY KEY(Name))", sqlite))
                 {
                     try
                     {
@@ -189,7 +197,7 @@ namespace Robot_Profiler
         {
             using (SQLiteConnection sqlite = new SQLiteConnection("Data Source=" + sqlfilename + ";Version=3;Pooling=True;Max Pool Size=10;Synchronous=off;FailIfMissing=True;Journal Mode=Off;"))
             {
-                using (SQLiteCommand insertSQL = new SQLiteCommand("INSERT INTO robotStats (Type, Name, [count(Name)], [Avg. Duration]) VALUES (@Type, @Name, @count, @AvgDuration)", sqlite))
+                using (SQLiteCommand insertSQL = new SQLiteCommand("INSERT INTO robotStats (Type, Name, [count(Name)], [Avg. Duration], [Total Duration]) VALUES (@Type, @Name, @count, @AvgDuration, @TotalDuration)", sqlite))
                 {
                     try
                     {
@@ -200,6 +208,7 @@ namespace Robot_Profiler
                             insertSQL.Parameters.AddWithValue("@Name", row["Name"]);
                             insertSQL.Parameters.AddWithValue("@count", row["count(Name)"]);
                             insertSQL.Parameters.AddWithValue("@AvgDuration", row["Avg. Duration"]);
+                            insertSQL.Parameters.AddWithValue("@TotalDuration", row["Total Duration"]);
                             try
                             {
                                 insertSQL.ExecuteNonQuery();

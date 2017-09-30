@@ -10,7 +10,15 @@ namespace Robot_Profiler
 
         public ProfileDB(String dbfilename, Boolean createDB)
         {
-            conn = new SQLite(dbfilename, createDB);     
+            try
+            {
+                conn = new SQLite(dbfilename, createDB);
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+     
         }
 
         private String dbfilename;

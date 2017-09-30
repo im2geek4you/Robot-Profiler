@@ -34,6 +34,7 @@ namespace Robot_Profiler
             db.CreateTableRobotStats();
             stats = db.RetrieveTableDistinctKWs();
             stats.Columns.Add("Avg. Duration");
+            stats.Columns.Add("Total Duration");
             foreach (DataRow row in stats.Rows)
             {                 
                 List<TimeSpan> durations = null;
@@ -42,8 +43,13 @@ namespace Robot_Profiler
                 //calculate average duration and set column Avg. Duration with that value
                 double doubleAverageTicks = durations.Average(timeSpan => timeSpan.Ticks);
                 long longAverageTicks = Convert.ToInt64(doubleAverageTicks);
+                //calculate total duration and set column Total Duration with that value
+                double doubleTotalTicks = durations.Sum(timeSpan => timeSpan.Ticks);
+                long longTotalTicks = Convert.ToInt64(doubleTotalTicks);
 
                 row["Avg. Duration"] = new TimeSpan(longAverageTicks);
+                row["Total Duration"] = new TimeSpan(longTotalTicks);
+
                 if (stats.Rows.IndexOf(row) % 10 == 0)
                 {
                     backgroundWorkerCalcAverageDuration.ReportProgress((int)((float)stats.Rows.IndexOf(row) / (float)stats.Rows.Count * 100));

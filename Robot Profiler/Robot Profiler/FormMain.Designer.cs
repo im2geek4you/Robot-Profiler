@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormRobotProfiler));
-            this.dataGridViewRobotKWs = new System.Windows.Forms.DataGridView();
             this.contextMenuStripDGVMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.graphPointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialogXMLFile = new System.Windows.Forms.OpenFileDialog();
@@ -49,37 +48,19 @@
             this.toolStripButtonClearSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonGraphAll = new System.Windows.Forms.ToolStripButton();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRobotKWs)).BeginInit();
+            this.tabControlMain = new System.Windows.Forms.TabControl();
             this.contextMenuStripDGVMain.SuspendLayout();
             this.menuStripMain.SuspendLayout();
             this.statusStripMainForm.SuspendLayout();
             this.toolStripMainForm.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dataGridViewRobotKWs
-            // 
-            this.dataGridViewRobotKWs.AllowUserToAddRows = false;
-            this.dataGridViewRobotKWs.AllowUserToDeleteRows = false;
-            this.dataGridViewRobotKWs.AllowUserToResizeRows = false;
-            this.dataGridViewRobotKWs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridViewRobotKWs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewRobotKWs.ContextMenuStrip = this.contextMenuStripDGVMain;
-            this.dataGridViewRobotKWs.Location = new System.Drawing.Point(12, 52);
-            this.dataGridViewRobotKWs.Name = "dataGridViewRobotKWs";
-            this.dataGridViewRobotKWs.RowHeadersVisible = false;
-            this.dataGridViewRobotKWs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewRobotKWs.Size = new System.Drawing.Size(1000, 352);
-            this.dataGridViewRobotKWs.TabIndex = 2;
-            this.dataGridViewRobotKWs.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DataGridViewRobotKWs_CellFormatting);
-            // 
             // contextMenuStripDGVMain
             // 
             this.contextMenuStripDGVMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.graphPointsToolStripMenuItem});
             this.contextMenuStripDGVMain.Name = "contextMenuStripDGVMain";
-            this.contextMenuStripDGVMain.Size = new System.Drawing.Size(158, 48);
+            this.contextMenuStripDGVMain.Size = new System.Drawing.Size(158, 26);
             this.contextMenuStripDGVMain.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripDGVMain_Opening);
             // 
             // graphPointsToolStripMenuItem
@@ -216,20 +197,35 @@
             this.toolStripButtonGraphAll.Text = "Graph all";
             this.toolStripButtonGraphAll.Click += new System.EventHandler(this.ToolStripButtonGraphAll_Click);
             // 
+            // tabControlMain
+            // 
+            this.tabControlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControlMain.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.tabControlMain.Location = new System.Drawing.Point(12, 52);
+            this.tabControlMain.Name = "tabControlMain";
+            this.tabControlMain.Padding = new System.Drawing.Point(21, 3);
+            this.tabControlMain.SelectedIndex = 0;
+            this.tabControlMain.Size = new System.Drawing.Size(1001, 352);
+            this.tabControlMain.TabIndex = 6;
+            this.tabControlMain.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabControlMain_DrawItem);
+            this.tabControlMain.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControlMain_Selected);
+            this.tabControlMain.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.tabControlMain_MouseDoubleClick);
+            // 
             // FormRobotProfiler
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1025, 429);
+            this.Controls.Add(this.tabControlMain);
             this.Controls.Add(this.toolStripMainForm);
             this.Controls.Add(this.statusStripMainForm);
-            this.Controls.Add(this.dataGridViewRobotKWs);
             this.Controls.Add(this.menuStripMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStripMain;
             this.Name = "FormRobotProfiler";
             this.Text = "Robot Profiler";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRobotKWs)).EndInit();
             this.contextMenuStripDGVMain.ResumeLayout(false);
             this.menuStripMain.ResumeLayout(false);
             this.menuStripMain.PerformLayout();
@@ -243,7 +239,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.DataGridView dataGridViewRobotKWs;
         private System.Windows.Forms.OpenFileDialog openFileDialogXMLFile;
         private System.Windows.Forms.MenuStrip menuStripMain;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -262,6 +257,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonGraphAll;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripDGVMain;
         private System.Windows.Forms.ToolStripMenuItem graphPointsToolStripMenuItem;
+        private System.Windows.Forms.TabControl tabControlMain;
     }
 }
 

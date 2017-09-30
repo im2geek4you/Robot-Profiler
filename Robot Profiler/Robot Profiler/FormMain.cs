@@ -14,7 +14,7 @@ namespace Robot_Profiler
 
         public FormRobotProfiler()
         {
-            InitializeComponent();
+            InitializeComponent();           
             this.AllowDrop = true;
             this.DragEnter += new DragEventHandler(FormRobotProfiler_DragEnter);
             this.DragDrop += new DragEventHandler(FormRobotProfiler_DragDrop);
@@ -38,6 +38,26 @@ namespace Robot_Profiler
         private void OpenRobotXMLFile(string filename)
         {
             datafile = Path.GetDirectoryName(filename) + "\\" + Path.GetFileNameWithoutExtension(filename) + ".db";
+            TabPage newProfilerTab = new TabPage(filename + "   ");
+            DataGridView dataGridViewRobotKWs = new DataGridView()
+            {
+                AllowUserToAddRows = false,
+                AllowUserToDeleteRows = false,
+                AllowUserToResizeRows = false,
+                ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize,
+                ContextMenuStrip = contextMenuStripDGVMain,
+                Location = new Point(3, 3),
+                Name = "dataGridViewRobotKWs",
+                RowHeadersVisible = false,
+                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+                TabIndex = 2,
+                Dock = DockStyle.Fill
+            };
+            dataGridViewRobotKWs.CellFormatting += new DataGridViewCellFormattingEventHandler(DataGridViewRobotKWs_CellFormatting);
+
+            newProfilerTab.Controls.Add(dataGridViewRobotKWs);
+            tabControlMain.Controls.Add(newProfilerTab);
+
             dataGridViewRobotKWs.DataSource = null;
             dataGridViewRobotKWs.Rows.Clear();
             toolStripStatusLabelMainFormStatus.Text = "Robot output file loaded: " + filename;
@@ -82,6 +102,27 @@ namespace Robot_Profiler
         {
             datafile = filename;
             ProfileDB db = new ProfileDB(filename, false);
+            TabPage newProfilerTab = new TabPage(filename + "   ");
+            DataGridView dataGridViewRobotKWs = new DataGridView()
+            {
+                AllowUserToAddRows = false,
+                AllowUserToDeleteRows = false,
+                AllowUserToResizeRows = false,
+                ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize,
+                ContextMenuStrip = contextMenuStripDGVMain,
+                Location = new Point(3, 3),
+                Name = "dataGridViewRobotKWs",
+                RowHeadersVisible = false,
+                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+                TabIndex = 2,
+                Dock = DockStyle.Fill
+            };
+            dataGridViewRobotKWs.CellFormatting += new DataGridViewCellFormattingEventHandler(DataGridViewRobotKWs_CellFormatting);
+
+            newProfilerTab.Controls.Add(dataGridViewRobotKWs);
+            tabControlMain.Controls.Add(newProfilerTab);
+
+
             dataGridViewRobotKWs.DataSource = null;
             dataGridViewRobotKWs.Rows.Clear();
             toolStripStatusLabelMainFormStatus.Text = "Database file loaded: " + filename;
@@ -91,47 +132,57 @@ namespace Robot_Profiler
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Robot Profiler v0.0.0.4\nCarlos Santos");
+            MessageBox.Show("Robot Profiler v0.0.0.5\nCarlos Santos");
         }
 
         private void ToolStripButtonSearch_Click(object sender, EventArgs e)
         {
             Boolean found = false;
-            dataGridViewRobotKWs.CurrentCell = null;
-            foreach (DataGridViewRow line in dataGridViewRobotKWs.Rows)
+            if (tabControlMain.SelectedTab != null)
             {
-                foreach(DataGridViewCell cell in line.Cells)
+                DataGridView dataGridViewRobotKWs = (DataGridView)tabControlMain.SelectedTab.Controls["dataGridViewRobotKWs"];
+
+                dataGridViewRobotKWs.CurrentCell = null;
+                foreach (DataGridViewRow line in dataGridViewRobotKWs.Rows)
                 {
-                    if( line.Index !=0)
+                    foreach (DataGridViewCell cell in line.Cells)
                     {
-                        if (cell.Value.ToString().ToLower().Contains(toolStripTextBoxSearch.Text.ToLower())){
-                            found = true;
+                        if (line.Index != 0)
+                        {
+                            if (cell.Value.ToString().ToLower().Contains(toolStripTextBoxSearch.Text.ToLower()))
+                            {
+                                found = true;
+                            }
                         }
                     }
-                }
-                if (found)
-                {
-                    dataGridViewRobotKWs.Rows[line.Index].Visible = true;
-                }
-                else
-                {
+                    if (found)
+                    {
+                        dataGridViewRobotKWs.Rows[line.Index].Visible = true;
+                    }
+                    else
+                    {
                         dataGridViewRobotKWs.Rows[line.Index].Visible = false;
+                    }
+                    found = false;
                 }
-                found = false;
             }
         }
 
         private void ToolStripButtonClearSearch_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewRow line in dataGridViewRobotKWs.Rows)
+            if (tabControlMain.SelectedTab != null)
             {
+                DataGridView dataGridViewRobotKWs = (DataGridView)tabControlMain.SelectedTab.Controls["dataGridViewRobotKWs"];
+                foreach (DataGridViewRow line in dataGridViewRobotKWs.Rows)
+                {
                     dataGridViewRobotKWs.Rows[line.Index].Visible = true;
+                }
             }
         }
 
         private void DataGridViewRobotKWs_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            
+            DataGridView dataGridViewRobotKWs = (DataGridView)tabControlMain.SelectedTab.Controls["dataGridViewRobotKWs"];
             switch (dataGridViewRobotKWs.Rows[e.RowIndex].Cells["Type"].Value.ToString())
             {
                 case "kw":
@@ -158,15 +209,20 @@ namespace Robot_Profiler
 
         private void ToolStripButtonGraphAll_Click(object sender, EventArgs e)
         {
-            Form formGraphAll = new FormGraphAll(dataGridViewRobotKWs)
+            if (tabControlMain.SelectedTab != null)
             {
-                StartPosition = FormStartPosition.CenterParent
-            };
-            formGraphAll.Show();
+                DataGridView dataGridViewRobotKWs = (DataGridView)tabControlMain.SelectedTab.Controls["dataGridViewRobotKWs"];
+                Form formGraphAll = new FormGraphAll(dataGridViewRobotKWs)
+                {
+                    StartPosition = FormStartPosition.CenterParent
+                };
+                formGraphAll.Show();
+            }
         }
 
         private void ContextMenuStripDGVMain_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            DataGridView dataGridViewRobotKWs = (DataGridView)tabControlMain.SelectedTab.Controls["dataGridViewRobotKWs"];
             if (dataGridViewRobotKWs.SelectedRows.Count != 1)
             {
                 contextMenuStripDGVMain.Items[0].Enabled = false;
@@ -179,6 +235,7 @@ namespace Robot_Profiler
 
         private void GraphPointsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            DataGridView dataGridViewRobotKWs = (DataGridView)tabControlMain.SelectedTab.Controls["dataGridViewRobotKWs"];
             foreach ( DataGridViewRow row in dataGridViewRobotKWs.SelectedRows)
             {
                 Form formGraphKwPoints = new FormGraphKwPoints(datafile, row.Cells["Name"].Value.ToString())
@@ -198,25 +255,72 @@ namespace Robot_Profiler
         void FormRobotProfiler_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            if (files.Length == 1)
+
+            foreach (string file in files)
             {
-                foreach (string file in files)
+                if (file.ToLower().EndsWith(".xml"))
                 {
-                    if (file.ToLower().EndsWith(".xml"))
-                    {
-                        OpenRobotXMLFile(file);
-                    }
-                    if (file.ToLower().EndsWith(".db"))
-                    {
-                        OpenRobotDBFile(file);
-                    }
+                    OpenRobotXMLFile(file);
+                }
+                if (file.ToLower().EndsWith(".db"))
+                {
+                    OpenRobotDBFile(file);
                 }
             }
-            else
+        }
+
+        private void tabControlMain_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            TabControl TC = (TabControl)sender;
+            Rectangle TabRec = TC.GetTabRect(e.Index);
+
+            Color Clr = e.State == DrawItemState.Selected ? Color.White : Color.LightGray;
+
+            e.Graphics.FillRectangle(new SolidBrush(Clr), TabRec);
+
+            StringFormat sf = new StringFormat
             {
-                MessageBox.Show("Can only load one file at a time!");
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center,
+                FormatFlags = StringFormatFlags.NoWrap
+            };
+            
+            if (e.State == DrawItemState.Selected)
+            {
+                Rectangle BTNRec = new Rectangle(TabRec.X + TabRec.Width - 15, 6, 10, 10);
+                e.Graphics.DrawImage(Properties.Resources.Actions_application_exit_icon, BTNRec);
             }
 
+            e.Graphics.DrawString(TC.TabPages[e.Index].Text, this.Font, Brushes.Black, TabRec, sf);
+
+            TabRec.Inflate(-2, -2);
+
+            Pen Pn = e.State == DrawItemState.Selected ? new Pen(Color.LightBlue, 1) : new Pen(Color.Empty, 1);
+
+            e.Graphics.DrawRectangle(Pn, TabRec);
+            e.DrawFocusRectangle();
+
+        }
+
+        private void tabControlMain_Selected(object sender, TabControlEventArgs e)
+        {
+            if (e.TabPage != null)
+            toolStripStatusLabelMainFormStatus.Text = "File loaded: " + e.TabPage.Text;
+            else
+                toolStripStatusLabelMainFormStatus.Text = "";
+        }
+
+        private void tabControlMain_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Rectangle r = tabControlMain.GetTabRect(this.tabControlMain.SelectedIndex);
+            Rectangle closeButton = new Rectangle(r.Right - 16, r.Top + 4, 16, 16);
+            if (closeButton.Contains(e.Location))
+            {
+                TabPage tabToRemove = this.tabControlMain.SelectedTab; 
+                if (tabControlMain.TabPages.Count >1) this.tabControlMain.SelectedIndex = 0; //TabControl bug workarround to prevent disapearing of tabpage header
+                this.tabControlMain.TabPages.Remove(tabToRemove);
+
+            }
         }
     }
 }

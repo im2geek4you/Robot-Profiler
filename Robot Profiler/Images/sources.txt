@@ -6,3 +6,6 @@ http://www.iconarchive.com/show/alphabet-icons-by-ariil/Letter-X-icon.html
 
 Spinner
 http://www.chimply.com/Generator#classic-spinner,indicator
+
+Tab Close button image
+http://www.iconarchive.com/show/oxygen-icons-by-oxygen-icons.org/Actions-application-exit-icon.html
