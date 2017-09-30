@@ -28,10 +28,14 @@ namespace Robot_Profiler
             openFileDialogXMLFile.FilterIndex = 1;
             openFileDialogXMLFile.RestoreDirectory = true;
             openFileDialogXMLFile.FileName = String.Empty;
+            openFileDialogXMLFile.Multiselect = true;
 
             if (openFileDialogXMLFile.ShowDialog() == DialogResult.OK)
             {
-                OpenRobotXMLFile(openFileDialogXMLFile.FileName);
+                foreach (string filename in openFileDialogXMLFile.FileNames)
+                {
+                    OpenRobotXMLFile(filename);
+                }
             }
         }
 
@@ -91,10 +95,14 @@ namespace Robot_Profiler
             openFileDialogDBFile.FilterIndex = 1;
             openFileDialogDBFile.RestoreDirectory = true;
             openFileDialogDBFile.FileName = String.Empty;
+            openFileDialogDBFile.Multiselect = true;
 
             if (openFileDialogDBFile.ShowDialog() == DialogResult.OK)
             {
-                OpenRobotDBFile(openFileDialogDBFile.FileName);
+                foreach (string filename in openFileDialogDBFile.FileNames)
+                {
+                    OpenRobotDBFile(filename);
+                }
             }
         }
 
