@@ -126,6 +126,7 @@ namespace Robot_Profiler
                 Dock = DockStyle.Fill
             };
             dataGridViewRobotKWs.CellFormatting += new DataGridViewCellFormattingEventHandler(DataGridViewRobotKWs_CellFormatting);
+            dataGridViewRobotKWs.MouseUp += DataGridViewRobotKWs_MouseUp;
 
             newProfilerTab.Controls.Add(dataGridViewRobotKWs);
             tabControlMain.Controls.Add(newProfilerTab);
@@ -136,6 +137,24 @@ namespace Robot_Profiler
             toolStripStatusLabelMainFormStatus.Text = "Database file loaded: " + filename;
             dataGridViewRobotKWs.DataSource = db.RetrieveTableStats();
             dataGridViewRobotKWs.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        }
+
+        private void DataGridViewRobotKWs_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                if (tabControlMain.SelectedTab != null)
+                {
+                    DataGridView dataGridViewRobotKWs = (DataGridView)tabControlMain.SelectedTab.Controls["dataGridViewRobotKWs"];
+
+                    var rowClicked = dataGridViewRobotKWs.HitTest(e.Location.X, e.Location.Y).RowIndex;
+                    if (rowClicked > -1)
+                    {
+                        dataGridViewRobotKWs.ClearSelection();
+                        dataGridViewRobotKWs.Rows[rowClicked].Selected = true;
+                    }
+                }
+            } 
         }
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
