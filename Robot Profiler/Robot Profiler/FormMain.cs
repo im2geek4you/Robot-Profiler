@@ -55,7 +55,8 @@ namespace Robot_Profiler
                 RowHeadersVisible = false,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
                 TabIndex = 2,
-                Dock = DockStyle.Fill
+                Dock = DockStyle.Fill,
+                Tag = datafile
             };
             dataGridViewRobotKWs.CellFormatting += new DataGridViewCellFormattingEventHandler(DataGridViewRobotKWs_CellFormatting);
 
@@ -123,7 +124,8 @@ namespace Robot_Profiler
                 RowHeadersVisible = false,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
                 TabIndex = 2,
-                Dock = DockStyle.Fill
+                Dock = DockStyle.Fill,
+                Tag = datafile
             };
             dataGridViewRobotKWs.CellFormatting += new DataGridViewCellFormattingEventHandler(DataGridViewRobotKWs_CellFormatting);
             dataGridViewRobotKWs.MouseUp += DataGridViewRobotKWs_MouseUp;
@@ -159,7 +161,7 @@ namespace Robot_Profiler
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Robot Profiler v0.0.0.5\nCarlos Santos");
+            MessageBox.Show("Robot Profiler v0.0.0.6\nCarlos Santos");
         }
 
         private void ToolStripButtonSearch_Click(object sender, EventArgs e)
@@ -265,7 +267,7 @@ namespace Robot_Profiler
             DataGridView dataGridViewRobotKWs = (DataGridView)tabControlMain.SelectedTab.Controls["dataGridViewRobotKWs"];
             foreach ( DataGridViewRow row in dataGridViewRobotKWs.SelectedRows)
             {
-                Form formGraphKwPoints = new FormGraphKwPoints(datafile, row.Cells["Name"].Value.ToString())
+                Form formGraphKwPoints = new FormGraphKwPoints(dataGridViewRobotKWs.Tag.ToString(), row.Cells["Name"].Value.ToString())
                 {
                     StartPosition = FormStartPosition.CenterParent
                 };
