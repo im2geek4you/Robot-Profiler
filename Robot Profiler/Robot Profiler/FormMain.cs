@@ -224,7 +224,7 @@ namespace Robot_Profiler
                     e.CellStyle.BackColor = Color.LightSeaGreen;
                     break;
                 default:
-                    break;
+                    break; 
             }
         }
 
