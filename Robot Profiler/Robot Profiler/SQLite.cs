@@ -81,6 +81,36 @@ namespace Robot_Profiler
             return dt.Rows.OfType<DataRow>().Select(dr => dr.Field<String>("Duration")).ToList();
         }
 
+        public DataTable SelectQueryDurationsPassFail(String kwName)
+        {
+            SQLiteDataAdapter da;
+            DataTable dt = new DataTable();
+            using (SQLiteConnection sqlite = new SQLiteConnection("Data Source=" + sqlfilename + ";Version=3;Pooling=True;Max Pool Size=10;Synchronous=off;FailIfMissing=True;Journal Mode=Off;"))
+            {
+                using (SQLiteCommand query = new SQLiteCommand("SELECT Name,Duration,Status FROM robotKWs WHERE Name=@Name", sqlite))
+                {
+                    try
+                    {
+                        query.Parameters.AddWithValue("@Name", kwName);
+                        sqlite.Open();  //Initiate connection to the db
+                        da = new SQLiteDataAdapter(query);
+                        da.Fill(dt); //fill the datasource
+                    }
+                    catch (SQLiteException ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                    finally
+                    {
+                        sqlite.Close();
+                        sqlite.Dispose();
+                    }
+                }
+            }
+            return dt;
+        }
+
+
         public void CreateTableKWs()
         {
             using (SQLiteConnection sqlite = new SQLiteConnection("Data Source=" + sqlfilename + ";Version=3;Pooling=True;Max Pool Size=10;Synchronous=off;FailIfMissing=True;Journal Mode=Off;"))

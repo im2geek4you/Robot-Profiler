@@ -19,7 +19,7 @@ namespace Robot_Profiler
             InitializeComponent();
             DataFile = datafile;
             KwName = kwName;
-            this.Text = "Keyword:" + kwName;
+            this.Text = "Keyword:" + kwName + " - " + datafile;
         }
 
         private void FormGraphKwPoints_Shown(object sender, EventArgs e)
@@ -64,6 +64,68 @@ namespace Robot_Profiler
             else
             {
                 chartGraphKwPoints.ChartAreas[0].AxisY.MajorGrid.LineWidth = 1;
+            }
+        }
+
+        private void toolStripButtonPassOnly_Click(object sender, EventArgs e)
+        {
+            List<TimeSpan> Durations;
+            ProfileDB db = new ProfileDB(DataFile, false);
+            Durations = db.RetrieveDuration(KwName, "PASS");
+            String seriesName = KwName + " (PASS)";
+
+            if (chartGraphKwPoints.Series.IndexOf(seriesName) == -1) {
+                Series S = chartGraphKwPoints.Series.Add(seriesName);
+                S.ChartType = SeriesChartType.Point;
+                S.Color = System.Drawing.Color.Green;
+                chartGraphKwPoints.ChartAreas[0].AxisY.LabelStyle.Format = "{}ms";
+                
+                S.LabelAngle = 45;
+
+                for (int i = 0; i < Durations.Count; i++)
+                {
+                    if (Durations[i] != TimeSpan.Zero)
+                    {
+                        chartGraphKwPoints.Series[seriesName].Points.AddXY(i, Durations[i].TotalMilliseconds);
+                    }
+                }
+                
+            }
+            else
+            {
+                chartGraphKwPoints.Series.RemoveAt(chartGraphKwPoints.Series.IndexOf(seriesName));
+            }
+            
+        }
+
+        private void toolStripButtonFailOnly_Click(object sender, EventArgs e)
+        {
+            List<TimeSpan> Durations;
+            ProfileDB db = new ProfileDB(DataFile, false);
+            Durations = db.RetrieveDuration(KwName, "FAIL");
+            String seriesName = KwName + " (FAIL)";
+
+            if (chartGraphKwPoints.Series.IndexOf(seriesName) == -1)
+            {
+                Series S = chartGraphKwPoints.Series.Add(seriesName);
+                S.ChartType = SeriesChartType.Point;
+                S.Color = System.Drawing.Color.Red;
+                chartGraphKwPoints.ChartAreas[0].AxisY.LabelStyle.Format = "{}ms";
+
+                S.LabelAngle = 45;
+
+                for (int i = 0; i < Durations.Count; i++)
+                {
+                    if (Durations[i] != TimeSpan.Zero)
+                    {
+                        chartGraphKwPoints.Series[seriesName].Points.AddXY(i, Durations[i].TotalMilliseconds);
+                    }
+                }
+
+            }
+            else
+            {
+                chartGraphKwPoints.Series.RemoveAt(chartGraphKwPoints.Series.IndexOf(seriesName));
             }
         }
     }

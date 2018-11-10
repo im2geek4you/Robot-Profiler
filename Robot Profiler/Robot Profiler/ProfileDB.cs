@@ -71,6 +71,24 @@ namespace Robot_Profiler
             return durationsTimeSpan;
         }
 
+        public List<TimeSpan> RetrieveDuration(String kwName, String state)
+        {
+            DataTable dt = conn.SelectQueryDurationsPassFail(kwName);
+            List<TimeSpan> durationsTimeSpan = new List<TimeSpan>();
+            foreach (DataRow row in dt.Rows)
+            {
+                if (state == row["Status"].ToString())
+                {
+                    durationsTimeSpan.Add(TimeSpan.Parse(row["Duration"].ToString()));
+                }else
+                {
+                    durationsTimeSpan.Add(TimeSpan.Zero);
+                }                
+            }
+            return durationsTimeSpan;
+
+        }
+
         public void SaveStats(DataTable stats)
         {
             conn.SaveTableStats(stats);

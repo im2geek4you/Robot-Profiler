@@ -28,14 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormGraphKwPoints));
             this.chartGraphKwPoints = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonXGrid = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonYGrid = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonPassOnly = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonFailOnly = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.chartGraphKwPoints)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -45,16 +48,16 @@
             this.chartGraphKwPoints.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea1.Name = "ChartArea1";
-            this.chartGraphKwPoints.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartGraphKwPoints.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.chartGraphKwPoints.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chartGraphKwPoints.Legends.Add(legend2);
             this.chartGraphKwPoints.Location = new System.Drawing.Point(12, 28);
             this.chartGraphKwPoints.Name = "chartGraphKwPoints";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chartGraphKwPoints.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chartGraphKwPoints.Series.Add(series2);
             this.chartGraphKwPoints.Size = new System.Drawing.Size(756, 356);
             this.chartGraphKwPoints.TabIndex = 0;
             this.chartGraphKwPoints.Text = "chart1";
@@ -63,7 +66,10 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonXGrid,
-            this.toolStripButtonYGrid});
+            this.toolStripButtonYGrid,
+            this.toolStripSeparator1,
+            this.toolStripButtonPassOnly,
+            this.toolStripButtonFailOnly});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(784, 25);
@@ -90,6 +96,31 @@
             this.toolStripButtonYGrid.Text = "Y Grid";
             this.toolStripButtonYGrid.Click += new System.EventHandler(this.toolStripButtonYGrid_Click);
             // 
+            // toolStripButtonPassOnly
+            // 
+            this.toolStripButtonPassOnly.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonPassOnly.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonPassOnly.Image")));
+            this.toolStripButtonPassOnly.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonPassOnly.Name = "toolStripButtonPassOnly";
+            this.toolStripButtonPassOnly.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonPassOnly.ToolTipText = "Overlay PASS results";
+            this.toolStripButtonPassOnly.Click += new System.EventHandler(this.toolStripButtonPassOnly_Click);
+            // 
+            // toolStripButtonFailOnly
+            // 
+            this.toolStripButtonFailOnly.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonFailOnly.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonFailOnly.Image")));
+            this.toolStripButtonFailOnly.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonFailOnly.Name = "toolStripButtonFailOnly";
+            this.toolStripButtonFailOnly.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonFailOnly.ToolTipText = "Overlay FAIL results";
+            this.toolStripButtonFailOnly.Click += new System.EventHandler(this.toolStripButtonFailOnly_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // FormGraphKwPoints
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -115,5 +146,8 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButtonXGrid;
         private System.Windows.Forms.ToolStripButton toolStripButtonYGrid;
+        private System.Windows.Forms.ToolStripButton toolStripButtonPassOnly;
+        private System.Windows.Forms.ToolStripButton toolStripButtonFailOnly;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
