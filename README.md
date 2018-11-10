@@ -49,4 +49,4 @@ Keyword (if it has more than one execution).
 ## Download
 In case you don't want to compile your own version of Robot Profiler you can download the compiled version below.
 
-![Robot Profiler v0.0.0.5.zip](https://github.com/im2geek4you/Robot-Profiler/files/1346630/Robot.Profiler.v0.0.0.5.zip)
+![Robot Profiler v0.0.0.7.zip](https://github.com/im2geek4you/Robot-Profiler/files/2568265/Robot.Profiler.v0.0.0.7.zip)
