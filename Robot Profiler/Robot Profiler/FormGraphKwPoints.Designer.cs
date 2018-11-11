@@ -28,19 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormGraphKwPoints));
             this.chartGraphKwPoints = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonXGrid = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonYGrid = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonPassOnly = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonFailOnly = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.splitContainerGraphTable = new System.Windows.Forms.SplitContainer();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonTable = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.chartGraphKwPoints)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerGraphTable)).BeginInit();
+            this.splitContainerGraphTable.Panel1.SuspendLayout();
+            this.splitContainerGraphTable.SuspendLayout();
             this.SuspendLayout();
             // 
             // chartGraphKwPoints
@@ -48,17 +54,17 @@
             this.chartGraphKwPoints.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea2.Name = "ChartArea1";
-            this.chartGraphKwPoints.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chartGraphKwPoints.Legends.Add(legend2);
-            this.chartGraphKwPoints.Location = new System.Drawing.Point(12, 28);
+            chartArea1.Name = "ChartArea1";
+            this.chartGraphKwPoints.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartGraphKwPoints.Legends.Add(legend1);
+            this.chartGraphKwPoints.Location = new System.Drawing.Point(0, 0);
             this.chartGraphKwPoints.Name = "chartGraphKwPoints";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chartGraphKwPoints.Series.Add(series2);
-            this.chartGraphKwPoints.Size = new System.Drawing.Size(756, 356);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chartGraphKwPoints.Series.Add(series1);
+            this.chartGraphKwPoints.Size = new System.Drawing.Size(760, 349);
             this.chartGraphKwPoints.TabIndex = 0;
             this.chartGraphKwPoints.Text = "chart1";
             // 
@@ -69,7 +75,9 @@
             this.toolStripButtonYGrid,
             this.toolStripSeparator1,
             this.toolStripButtonPassOnly,
-            this.toolStripButtonFailOnly});
+            this.toolStripButtonFailOnly,
+            this.toolStripSeparator2,
+            this.toolStripButtonTable});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(784, 25);
@@ -96,6 +104,11 @@
             this.toolStripButtonYGrid.Text = "Y Grid";
             this.toolStripButtonYGrid.Click += new System.EventHandler(this.toolStripButtonYGrid_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // toolStripButtonPassOnly
             // 
             this.toolStripButtonPassOnly.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -116,18 +129,45 @@
             this.toolStripButtonFailOnly.ToolTipText = "Overlay FAIL results";
             this.toolStripButtonFailOnly.Click += new System.EventHandler(this.toolStripButtonFailOnly_Click);
             // 
-            // toolStripSeparator1
+            // splitContainerGraphTable
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.splitContainerGraphTable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainerGraphTable.Location = new System.Drawing.Point(12, 28);
+            this.splitContainerGraphTable.Name = "splitContainerGraphTable";
+            this.splitContainerGraphTable.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainerGraphTable.Panel1
+            // 
+            this.splitContainerGraphTable.Panel1.Controls.Add(this.chartGraphKwPoints);
+            this.splitContainerGraphTable.Panel2Collapsed = true;
+            this.splitContainerGraphTable.Size = new System.Drawing.Size(760, 352);
+            this.splitContainerGraphTable.SplitterDistance = 176;
+            this.splitContainerGraphTable.TabIndex = 2;
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButtonTable
+            // 
+            this.toolStripButtonTable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonTable.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonTable.Image")));
+            this.toolStripButtonTable.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonTable.Name = "toolStripButtonTable";
+            this.toolStripButtonTable.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonTable.Text = "toolStripButton1";
+            this.toolStripButtonTable.Click += new System.EventHandler(this.toolStripButtonTable_Click);
             // 
             // FormGraphKwPoints
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 392);
+            this.Controls.Add(this.splitContainerGraphTable);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.chartGraphKwPoints);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormGraphKwPoints";
             this.Text = "FormGraphKwPoints";
@@ -135,6 +175,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.chartGraphKwPoints)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.splitContainerGraphTable.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerGraphTable)).EndInit();
+            this.splitContainerGraphTable.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -149,5 +192,8 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonPassOnly;
         private System.Windows.Forms.ToolStripButton toolStripButtonFailOnly;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.SplitContainer splitContainerGraphTable;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton toolStripButtonTable;
     }
 }

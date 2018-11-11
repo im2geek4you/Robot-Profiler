@@ -89,6 +89,16 @@ namespace Robot_Profiler
 
         }
 
+        public DataTable GetKwTable(String kwName)
+        {
+            return conn.GetKwTable(kwName);
+        }
+
+        public DataRow GetKwByID(String kwID)
+        {
+            return conn.GetKwByID(kwID);
+        }
+
         public void SaveStats(DataTable stats)
         {
             conn.SaveTableStats(stats);

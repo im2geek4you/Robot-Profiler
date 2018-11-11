@@ -79,6 +79,12 @@
     <Compile Include="FormGraphKwPoints.Designer.cs">
       <DependentUpon>FormGraphKwPoints.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormHierarchyTree.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormHierarchyTree.Designer.cs">
+      <DependentUpon>FormHierarchyTree.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormGraphKwPoints.resx">
       <DependentUpon>FormGraphKwPoints.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormHierarchyTree.resx">
+      <DependentUpon>FormHierarchyTree.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>

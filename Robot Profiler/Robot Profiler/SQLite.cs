@@ -110,6 +110,71 @@ namespace Robot_Profiler
             return dt;
         }
 
+        public DataTable GetKwTable(String kwName)
+        {
+            SQLiteDataAdapter da;
+            DataTable dt = new DataTable();
+            using (SQLiteConnection sqlite = new SQLiteConnection("Data Source=" + sqlfilename + ";Version=3;Pooling=True;Max Pool Size=10;Synchronous=off;FailIfMissing=True;Journal Mode=Off;"))
+            {
+                using (SQLiteCommand query = new SQLiteCommand("SELECT Name,StartTime,EndTime,Duration,Status,ID,ParentID FROM robotKWs WHERE Name=@Name", sqlite))
+                {
+                    try
+                    {
+                        query.Parameters.AddWithValue("@Name", kwName);
+                        sqlite.Open();  //Initiate connection to the db
+                        da = new SQLiteDataAdapter(query);
+                        da.Fill(dt); //fill the datasource
+                    }
+                    catch (SQLiteException ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                    finally
+                    {
+                        sqlite.Close();
+                        sqlite.Dispose();
+                    }
+                }
+            }
+            return dt;
+        }
+
+        public DataRow GetKwByID(String kwId)
+        {
+            SQLiteDataAdapter da;
+            DataTable dt = new DataTable();
+            using (SQLiteConnection sqlite = new SQLiteConnection("Data Source=" + sqlfilename + ";Version=3;Pooling=True;Max Pool Size=10;Synchronous=off;FailIfMissing=True;Journal Mode=Off;"))
+            {
+                using (SQLiteCommand query = new SQLiteCommand("SELECT Type,Name,StartTime,EndTime,Duration,Status,ID,ParentID FROM robotKWs WHERE ID=@kwId", sqlite))
+                {
+                    try
+                    {
+                        query.Parameters.AddWithValue("@kwId", kwId);
+                        sqlite.Open();  //Initiate connection to the db
+                        da = new SQLiteDataAdapter(query);
+                        da.Fill(dt); //fill the datasource
+                    }
+                    catch (SQLiteException ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                    finally
+                    {
+                        sqlite.Close();
+                        sqlite.Dispose();
+                    }
+                }
+            }
+            if (dt.Rows.Count == 1)
+            {
+                return dt.Rows[0];
+            }
+            else
+            {
+                return null;
+            }
+            
+        }
 
         public void CreateTableKWs()
         {
