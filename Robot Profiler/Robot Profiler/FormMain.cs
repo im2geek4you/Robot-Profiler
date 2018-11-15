@@ -161,7 +161,7 @@ namespace Robot_Profiler
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Robot Profiler v0.0.0.8\nCarlos Santos");
+            MessageBox.Show("Robot Profiler v0.0.0.9\nCarlos Santos");
         }
 
         private void ToolStripButtonSearch_Click(object sender, EventArgs e)

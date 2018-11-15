@@ -89,6 +89,12 @@ namespace Robot_Profiler
 
         }
 
+        public long RetrieveStatusCount(String kwName, String state)
+        {
+            long count = conn.SelectQueryCountStatus(kwName, state);
+            return count;
+        }
+
         public DataTable GetKwTable(String kwName)
         {
             return conn.GetKwTable(kwName);

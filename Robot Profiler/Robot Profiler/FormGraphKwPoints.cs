@@ -10,6 +10,7 @@ namespace Robot_Profiler
         private String DataFile;
         private String KwName;
         DataGridView KwDGV = new DataGridView();
+        private String ID = null;
 
         public FormGraphKwPoints()
         {
@@ -21,6 +22,15 @@ namespace Robot_Profiler
             DataFile = datafile;
             KwName = kwName;
             this.Text = "Keyword:" + kwName + " - " + datafile;
+        }
+
+        public FormGraphKwPoints(String datafile, String kwName, String ID)
+        {
+            InitializeComponent();
+            DataFile = datafile;
+            KwName = kwName;
+            this.Text = "Keyword:" + kwName + " - " + datafile;
+            this.ID = ID;
         }
 
         private void FormGraphKwPoints_Shown(object sender, EventArgs e)
@@ -37,10 +47,28 @@ namespace Robot_Profiler
             chartGraphKwPoints.Series[KwName].ToolTip = "x= #VALX, y= #VAL ms";
 
             S.LabelAngle = 45;
+            toolStripStatusLabelStatus.Text = "PASS: " + db.RetrieveStatusCount(KwName, "PASS") + " FAIL: " + db.RetrieveStatusCount(KwName, "FAIL");
 
             for (int i = 0; i < Durations.Count; i++)
             {
                 chartGraphKwPoints.Series[KwName].Points.AddXY(i, Durations[i].TotalMilliseconds);
+            }
+
+            if (ID != null)
+            {
+                showTable();
+                KwDGV.ClearSelection();
+                int line = 0;
+                foreach (DataGridViewRow row in KwDGV.Rows)
+                {
+                    if (row.Cells["ID"].Value.ToString() == ID) line = row.Index;
+                }
+                KwDGV.Rows[line].Selected = true;
+                if ((KwDGV.Rows[line].Displayed == false) && (KwDGV.Rows[line].Visible))
+                {
+                    KwDGV.FirstDisplayedScrollingRowIndex = line;
+                }
+                overlayGraphKw(line, ID);
             }
 
         }
@@ -71,38 +99,17 @@ namespace Robot_Profiler
 
         private void toolStripButtonPassOnly_Click(object sender, EventArgs e)
         {
-            List<TimeSpan> Durations;
-            ProfileDB db = new ProfileDB(DataFile, false);
-            Durations = db.RetrieveDuration(KwName, "PASS");
-            String seriesName = KwName + " (PASS)";
+            overlayGraphPoints("PASS");
+        }
 
-            if (chartGraphKwPoints.Series.IndexOf(seriesName) == -1) {
-                Series S = chartGraphKwPoints.Series.Add(seriesName);
-                S.ChartType = SeriesChartType.Point;
-                S.Color = System.Drawing.Color.Green;
-                chartGraphKwPoints.ChartAreas[0].AxisY.LabelStyle.Format = "{}ms";
-                chartGraphKwPoints.MouseClick += new MouseEventHandler(ChartGraphKwPoints_MouseClick);
-                chartGraphKwPoints.Series[seriesName].ToolTip = "x= #VALX, y= #VAL ms";
+        private void toolStripButtonFailOnly_Click(object sender, EventArgs e)
+        {
+            overlayGraphPoints("FAIL");
+        }
 
-                S.LabelAngle = 45;
-
-                for (int i = 0; i < Durations.Count; i++)
-                {
-                    if (Durations[i] != TimeSpan.Zero)
-                    {
-                        //DataPoint point = new DataPoint();
-                        //point.SetValueXY(i, Durations[i].TotalMilliseconds);
-                        //point.Tag = ID;
-                        chartGraphKwPoints.Series[seriesName].Points.AddXY(i, Durations[i].TotalMilliseconds);
-                    }
-                }
-                
-            }
-            else
-            {
-                chartGraphKwPoints.Series.RemoveAt(chartGraphKwPoints.Series.IndexOf(seriesName));
-            }
-            
+        private void toolStripButtonTable_Click(object sender, EventArgs e)
+        {
+            showTable();
         }
 
         private void ChartGraphKwPoints_MouseClick(object sender, MouseEventArgs e)
@@ -132,62 +139,6 @@ namespace Robot_Profiler
 
         }
 
-        private void toolStripButtonFailOnly_Click(object sender, EventArgs e)
-        {
-            List<TimeSpan> Durations;
-            ProfileDB db = new ProfileDB(DataFile, false);
-            Durations = db.RetrieveDuration(KwName, "FAIL");
-            String seriesName = KwName + " (FAIL)";
-
-            if (chartGraphKwPoints.Series.IndexOf(seriesName) == -1)
-            {
-                Series S = chartGraphKwPoints.Series.Add(seriesName);
-                S.ChartType = SeriesChartType.Point;
-                S.Color = System.Drawing.Color.Red;
-                chartGraphKwPoints.ChartAreas[0].AxisY.LabelStyle.Format = "{}ms";
-                chartGraphKwPoints.MouseClick += new MouseEventHandler(ChartGraphKwPoints_MouseClick);
-                chartGraphKwPoints.Series[seriesName].ToolTip = "x= #VALX, y= #VAL ms";
-
-                S.LabelAngle = 45;
-
-                for (int i = 0; i < Durations.Count; i++)
-                {
-                    if (Durations[i] != TimeSpan.Zero)
-                    {
-                        chartGraphKwPoints.Series[seriesName].Points.AddXY(i, Durations[i].TotalMilliseconds);
-                    }
-                }
-
-            }
-            else
-            {
-                chartGraphKwPoints.Series.RemoveAt(chartGraphKwPoints.Series.IndexOf(seriesName));
-            }
-        }
-
-        private void toolStripButtonTable_Click(object sender, EventArgs e)
-        {
-            if (splitContainerGraphTable.Panel2Collapsed)
-            {
-                splitContainerGraphTable.Panel2Collapsed = false;
-                ProfileDB db = new ProfileDB(DataFile, false);
-
-                ContextMenuStrip KwDGVMenu = new ContextMenuStrip();
-                KwDGVMenu.Items.Add("Show Hierarchy Tree");
-                KwDGVMenu.ItemClicked += new ToolStripItemClickedEventHandler(KwDGVMenu_ItemClicked);
-                KwDGV.ContextMenuStrip = KwDGVMenu;
-                KwDGV.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(KwDGV_DataBindingComplete);
-                KwDGV.Dock = DockStyle.Fill;
-                KwDGV.RowHeadersVisible = false;
-                KwDGV.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                KwDGV.DataSource = db.GetKwTable(KwName);
-                KwDGV.MouseUp += new MouseEventHandler(KwDGV_MouseUp);
-
-                splitContainerGraphTable.Panel2.Controls.Add(KwDGV);
-            }
-
-        }
-
 
         private void KwDGV_MouseUp(object sender, MouseEventArgs e)
         {
@@ -196,8 +147,12 @@ namespace Robot_Profiler
                 var rowClicked = KwDGV.HitTest(e.Location.X, e.Location.Y).RowIndex;
                 if (rowClicked > -1)
                 {
-                    KwDGV.ClearSelection();
-                    KwDGV.Rows[rowClicked].Selected = true;
+                    if (KwDGV.SelectedRows.Count >= 1 && ! KwDGV.SelectedRows.Contains(KwDGV.Rows[KwDGV.HitTest(e.Location.X, e.Location.Y).RowIndex]))
+                    {
+                        KwDGV.ClearSelection();
+                        KwDGV.Rows[rowClicked].Selected = true;
+                    }
+
                 }
             }
         }
@@ -235,5 +190,109 @@ namespace Robot_Profiler
 
 
         }
+
+        private void overlayGraphPoints(String status)
+        {
+            List<TimeSpan> Durations;
+            ProfileDB db = new ProfileDB(DataFile, false);
+            Durations = db.RetrieveDuration(KwName, status);
+            String seriesName = KwName + " ("+ status + ")";
+
+            if (chartGraphKwPoints.Series.IndexOf(seriesName) == -1)
+            {
+                Series S = chartGraphKwPoints.Series.Add(seriesName);
+                S.ChartType = SeriesChartType.Point;
+                if (status == "PASS")
+                {
+                    S.Color = System.Drawing.Color.Green;
+                }
+                else
+                {
+                    S.Color = System.Drawing.Color.Red;
+                }
+                chartGraphKwPoints.ChartAreas[0].AxisY.LabelStyle.Format = "{}ms";
+                chartGraphKwPoints.MouseClick += new MouseEventHandler(ChartGraphKwPoints_MouseClick);
+                chartGraphKwPoints.Series[seriesName].ToolTip = "x= #VALX, y= #VAL ms";
+
+                S.LabelAngle = 45;
+
+                for (int i = 0; i < Durations.Count; i++)
+                {
+                    if (Durations[i] != TimeSpan.Zero)
+                    {
+                        chartGraphKwPoints.Series[seriesName].Points.AddXY(i, Durations[i].TotalMilliseconds);
+                    }
+                }
+                //workarround for bug in chart when only one point exists at x=0
+                if (chartGraphKwPoints.Series[seriesName].Points.Count == 1)
+                {
+                    DataPoint dp = new DataPoint(1, 0);
+                    dp.Color = System.Drawing.Color.Transparent;
+                    chartGraphKwPoints.Series[seriesName].Points.Add(dp);
+                }
+
+            }
+            else
+            {
+                chartGraphKwPoints.Series.RemoveAt(chartGraphKwPoints.Series.IndexOf(seriesName));
+            }
+        }
+
+        private void overlayGraphKw(int index, String KwID)
+        {
+            System.Data.DataRow KwData;
+            ProfileDB db = new ProfileDB(DataFile, false);
+            KwData = db.GetKwByID(KwID);
+            String seriesName = KwName + " (Selected)";
+
+            if (chartGraphKwPoints.Series.IndexOf(seriesName) == -1)
+            {
+                Series S = chartGraphKwPoints.Series.Add(seriesName);
+                S.ChartType = SeriesChartType.Point;
+                S.Color = System.Drawing.Color.DarkBlue;
+                chartGraphKwPoints.ChartAreas[0].AxisY.LabelStyle.Format = "{}ms";
+                chartGraphKwPoints.MouseClick += new MouseEventHandler(ChartGraphKwPoints_MouseClick);
+                chartGraphKwPoints.Series[seriesName].ToolTip = "x= #VALX, y= #VAL ms";
+                S.LabelAngle = 45;
+                chartGraphKwPoints.Series[seriesName].Points.AddXY(index, TimeSpan.Parse(KwData["Duration"].ToString()).TotalMilliseconds);
+                //workarround for bug in chart when only one point exists at x=0
+                if (index == 0)
+                {
+                    DataPoint dp = new DataPoint(1,0);
+                    dp.Color = System.Drawing.Color.Transparent;
+                    chartGraphKwPoints.Series[seriesName].Points.Add(dp);
+                }
+
+            }
+            else
+            {
+                chartGraphKwPoints.Series.RemoveAt(chartGraphKwPoints.Series.IndexOf(seriesName));
+            }
+        }
+
+
+        private void showTable()
+        {
+            if (splitContainerGraphTable.Panel2Collapsed)
+            {
+                splitContainerGraphTable.Panel2Collapsed = false;
+                ProfileDB db = new ProfileDB(DataFile, false);
+
+                ContextMenuStrip KwDGVMenu = new ContextMenuStrip();
+                KwDGVMenu.Items.Add("Show Hierarchy Tree");
+                KwDGVMenu.ItemClicked += new ToolStripItemClickedEventHandler(KwDGVMenu_ItemClicked);
+                KwDGV.ContextMenuStrip = KwDGVMenu;
+                KwDGV.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(KwDGV_DataBindingComplete);
+                KwDGV.Dock = DockStyle.Fill;
+                KwDGV.RowHeadersVisible = false;
+                KwDGV.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                KwDGV.DataSource = db.GetKwTable(KwName);
+                KwDGV.MouseUp += new MouseEventHandler(KwDGV_MouseUp);
+
+                splitContainerGraphTable.Panel2.Controls.Add(KwDGV);
+            }
+        }
+
+
     }
 }

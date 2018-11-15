@@ -110,6 +110,35 @@ namespace Robot_Profiler
             return dt;
         }
 
+        public long SelectQueryCountStatus(String kwName, String state)
+        {
+            long count = -1;
+            using (SQLiteConnection sqlite = new SQLiteConnection("Data Source=" + sqlfilename + ";Version=3;Pooling=True;Max Pool Size=10;Synchronous=off;FailIfMissing=True;Journal Mode=Off;"))
+            {
+                using (SQLiteCommand query = new SQLiteCommand("SELECT count(*) FROM robotKWs WHERE Name=@Name AND Status=@state", sqlite))
+                {
+                    try
+                    {
+                        query.Parameters.AddWithValue("@Name", kwName);
+                        query.Parameters.AddWithValue("@state", state);
+                        sqlite.Open();  //Initiate connection to the db
+                        count = (long)query.ExecuteScalar();
+                    }
+                    catch (SQLiteException ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                    finally
+                    {
+                        sqlite.Close();
+                        sqlite.Dispose();
+                    }
+                }
+            }
+            return count;
+        }
+
+
         public DataTable GetKwTable(String kwName)
         {
             SQLiteDataAdapter da;

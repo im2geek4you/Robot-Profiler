@@ -30,8 +30,9 @@ namespace Robot_Profiler
         {            
             ProfileDB db = new ProfileDB(DataFile, false);
             DataRow KW = db.GetKwByID(KwID);
-            TreeNode parentNode = new TreeNode("[" + KW["Type"].ToString() + "] " + KwName);
+            TreeNode parentNode = generateNode(KW);
             treeViewKw.Nodes.Add(retrieveTree(KW["ParentID"].ToString(), parentNode));
+            treeViewKw.ShowNodeToolTips = true;
             treeViewKw.ExpandAll();
         }
 
@@ -44,11 +45,69 @@ namespace Robot_Profiler
             {
                 return node;
             }
-            TreeNode parentNode = new TreeNode("["+ KW["Type"].ToString() + "] " + KW["Name"].ToString());
+            TreeNode parentNode = generateNode(KW);          
             parentNode.Nodes.Add(node);
             return retrieveTree(KW["ParentID"].ToString(), parentNode);
 
         }
 
+        private TreeNode generateNode(DataRow KW)
+        {
+            TreeNode node;
+            switch (KW["Type"].ToString())
+            {
+                case "suite":
+                    if (KW["Status"].ToString() == "PASS")
+                    {
+                        node = new TreeNode(KW["Name"].ToString(), 2, 2);
+                    }
+                    else
+                    {
+                        node = new TreeNode(KW["Name"].ToString(), 3, 3);
+                    }
+                    break;
+                case "test":
+                    if (KW["Status"].ToString() == "PASS")
+                    {
+                        node = new TreeNode(KW["Name"].ToString(), 4, 4);
+                    }
+                    else
+                    {
+                        node = new TreeNode(KW["Name"].ToString(), 5, 5);
+                    }
+                    break;
+                case "kw":
+                    if (KW["Status"].ToString() == "PASS")
+                    {
+                        node = new TreeNode(KW["Name"].ToString(), 6, 6);
+                    }
+                    else
+                    {
+                        node = new TreeNode(KW["Name"].ToString(), 7, 7);
+                    }
+                    break;
+                default:
+                    node = new TreeNode("[" + KW["Type"].ToString() + "] " + KW["Name"].ToString());
+                    break;
+            }
+            node.ToolTipText = "Start Time: " + KW["StartTime"].ToString() + "\nEnd Time: " + KW["EndTime"].ToString() + "\nDuration: " + KW["Duration"].ToString();
+            node.Tag = KW["ID"].ToString();
+            return node;
+        }
+
+        private void graphAllPointsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TreeNode node = treeViewKw.SelectedNode;
+            if (node!= null)
+            {
+                Form formGraphKwPoints = new FormGraphKwPoints(DataFile, node.Text, node.Tag.ToString())
+                {
+                    StartPosition = FormStartPosition.CenterParent
+                };
+                formGraphKwPoints.Show();
+            }
+
+
+        }
     }
 }
