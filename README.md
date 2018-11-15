@@ -8,7 +8,9 @@ to determine which keywords need to be optimized based on which ones are taking 
 
 ![Screenshot02](https://user-images.githubusercontent.com/13609585/29005915-c95bec2a-7add-11e7-931f-1ccfa0c977d5.png)
 
-![Screenshot03](https://user-images.githubusercontent.com/13609585/29005914-c95bb2fa-7add-11e7-9087-231bb2519be8.png)
+![screenshot04](https://user-images.githubusercontent.com/13609585/48583807-ff393f80-e91f-11e8-94d7-249d4d302961.png)
+
+![screenshot05](https://user-images.githubusercontent.com/13609585/48583816-052f2080-e920-11e8-8156-356272cd555b.png)
 
 ## What is the xml format expected from Robot or Rebot?
 
